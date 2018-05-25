@@ -1,0 +1,30 @@
+{
+  "name": "hrla22-mvp",
+  "version": "1.0.0",
+  "description": "'dad joke generator''",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmmcc/hrla22-MVP.git"
+  },
+  "keywords": [
+    "jokes"
+  ],
+  "author": "kyle mccarty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmmcc/hrla22-MVP/issues"
+  },
+  "homepage": "https://github.com/kmmcc/hrla22-MVP#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "helmet": "^3.12.1",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.17.5",
+    "sequelize": "^4.37.10"
+  }
+}
