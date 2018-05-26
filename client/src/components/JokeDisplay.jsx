@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class JokeDisplay extends React.Component {
-  render () {
+function JokeDisplay (props) {
     return (
       <div>
-        joke display
+        {props.joke}
       </div>
     )
   }
-}
 
 export default JokeDisplay;

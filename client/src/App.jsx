@@ -41,11 +41,12 @@ class App extends React.Component {
   }
 
   fetchJokes() {
-    console.log(this.state.jokes)
 
     axios.get('/jokesearch')
     .then((response) => {
-      console.log('RESPONSE FROM GET FRONT END', response)
+      console.log('RESPONSE FROM GET FRONT END', response.data)
+      this.setState({ jokes: [...this.state.jokes, response.data] });
+      console.log('STATE ON FRONT END', this.state.jokes)
     })
     .catch((error) => {
       console.log('FRONT END ERROR', error)
@@ -63,7 +64,7 @@ class App extends React.Component {
           <input id="searchButton" type="submit" name="searchButton"/>
         </form>
       </div>
-        <div> <JokeDisplay /> </div>
+        <div> <JokeDisplay joke={this.state.jokes[0]}/> </div>
       </div>
     )
   }

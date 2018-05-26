@@ -47,6 +47,7 @@ app.post('/jokesearch', function(req, res) {
 app.get('/jokesearch', function(req, res) {
   db.Joke.findAll().then(jokes => {
     console.log('JOKES IN GET jokes[1].dataValues.jokeText', jokes[1].dataValues.jokeText)
+    res.send(jokes[1].dataValues.jokeText)
 
   })
 })
