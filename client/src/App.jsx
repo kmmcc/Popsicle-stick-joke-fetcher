@@ -19,25 +19,30 @@ class App extends React.Component {
   }
 
   handleInput(e) {
-    this.setState({ todo: e.target.value });
+    this.setState({ input: e.target.value });
   }
 
   jokeSearch(e) {
+    var context = this
     e.preventDefault()
 
     console.log('jokesearch fire')
     
-    axios.post('/jokesearch', {
-      search: e
+    axios.post('/jokesearch', 
+    {
+      search: this.state.input
     })
     .then(function (response) {
-      console.log(response);
+      console.log('that response.data.results', response.data.results);
+      console.log('this', this)
+      context.setState({ jokes: response.data.results });
     })
     .catch(function (error) {
-      console.log(error);
+      console.log(error); 
     })
 
     e.target.reset();
+    
   }
 
   fetchJokes() {
@@ -45,7 +50,7 @@ class App extends React.Component {
     axios.get('/jokesearch')
     .then((response) => {
       console.log('RESPONSE FROM GET FRONT END', response.data)
-      this.setState({ jokes: [...this.state.jokes, response.data] });
+      // this.setState({ jokes: [...this.state.jokes, response.data] });
       console.log('STATE ON FRONT END', this.state.jokes)
     })
     .catch((error) => {
@@ -57,14 +62,14 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <div> Popsicle Stick Jokes </div>
+        <div> <h1> Popsicle Stick Jokes </h1> </div>
         <div>
         <form onSubmit={e => this.jokeSearch(e)}>
           <input onKeyUp={e => this.handleInput(e)} required id="searchInput" type="text" name="searchInput"/>
           <input id="searchButton" type="submit" name="searchButton"/>
         </form>
       </div>
-        <div> <JokeDisplay joke={this.state.jokes[0]}/> </div>
+        {this.state.jokes[0] && (<div> {this.state.jokes.map((joke) => <JokeDisplay joke={joke.joke}/>)} </div>)}
       </div>
     )
   }

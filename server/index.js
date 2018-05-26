@@ -23,12 +23,13 @@ app.listen(PORT, function(err, success) {
 })
 
 app.post('/jokesearch', function(req, res) {
+  console.log('REQ IN SERVER INDEX', req.query, "GGGGGGGG", req.body.search)
   axios({ 
     method: 'get',
     headers: {
       Accept: 'application/json',
   },
-    url: 'https://icanhazdadjoke.com/search' + '?term=dog' + '&limit=5',
+    url: 'https://icanhazdadjoke.com/search' + '?term=' + req.body.search,
     limit: 5,
     search_term: req.search
   })
@@ -37,7 +38,7 @@ app.post('/jokesearch', function(req, res) {
     for (var i = 0; i < response.data.results.length; i++) {
       db.Joke.create( { jokeText: response.data.results[i].joke } );
     }
-
+    res.send(response.data)
   })
   .catch(function(error) {
     console.log(error);
@@ -47,7 +48,10 @@ app.post('/jokesearch', function(req, res) {
 app.get('/jokesearch', function(req, res) {
   db.Joke.findAll().then(jokes => {
     console.log('JOKES IN GET jokes[1].dataValues.jokeText', jokes[1].dataValues.jokeText)
-    res.send(jokes[1].dataValues.jokeText)
-
+    var jokeArray = []
+    for (var i = 0; i < jokes.length; i++) {
+      jokeArray.push(jokes[i].dataValues.jokeText)
+    }
+    res.send(jokeArray)
   })
 })
